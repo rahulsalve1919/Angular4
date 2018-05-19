@@ -1,0 +1,220 @@
+<div class="container">
+    <div class="col-md-12">
+        <h3><b>Product List</b></h3>
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Description</th>
+                    <th>Quantity</th>
+                    <th class="text-center">Price</th>
+                    <th class="text-center">Modify</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of products">
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.description }}</td>
+                    <td>{{product.quantity}}</td>
+                    <td>{{ product.price | currency:'USD':true:'1.0-2' }}</td>
+                    <td>
+                        <button class="btn btn-info" data-toggle="modal" data-target="#myModalEdit" (click)="showEditProductForm(product)">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        <button class="btn btn-info" data-toggle="modal" data-target="#myModalDetails" (click)="showEditProductForm(product)">
+                            <i class="glyphicon glyphicon-th-list"></i>
+                        </button>
+                        <button class="btn btn-danger"
+                                (click)="removeProduct(product)">
+                            <i class="glyphicon glyphicon-remove"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-success" data-toggle="modal" data-target="#myModalAdd"
+                (click)="showAddProductForm()">
+            <i class="fa fa-plus"></i>
+        </button>
+        <br />
+        <br />
+        <!-- Modal -->
+        <div class="modal fade" id="myModalAdd" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"><b>Add Form</b></h4>
+                    </div>
+                    <div class="modal-body">
+                        <form *ngIf="productForm">
+                            <div class="col-lg-12">
+                                <div class="col-lg-2">ID:</div>
+                                <div class="col-lg-2"><input type="text" name="id" [(ngModel)]="newProduct.id" /> </div>
+                            </div>
+                            <div>&nbsp;</div>
+                            <div class="col-lg-12">
+                                <div class="col-lg-2">Name:</div>
+                                <div class="col-lg-2"><input type="text" name="id" [(ngModel)]="newProduct.name" /> </div>
+                            </div>
+                            <div>&nbsp;</div>
+                            <div class="col-lg-12">
+                                <div class="col-lg-2">Description:</div>
+                                <div class="col-lg-2"><input type="text" name="id" [(ngModel)]="newProduct.description" /> </div>
+                            </div>
+                            <div>&nbsp;</div>
+                            <div class="col-lg-12">
+                                <div class="col-lg-2">Price:</div>
+                                <div class="col-lg-2"><input type="text" name="id" [(ngModel)]="newProduct.price" /> </div>
+                            </div>
+                            <div>&nbsp;</div>
+                            <div class="col-lg-12">
+                                <div class="col-lg-2">Quantity:</div>
+                                <div class="col-lg-2"><input type="text" name="id" [(ngModel)]="newProduct.quantity" /> </div>
+                            </div>
+
+                            <div>&nbsp;</div>
+                            <div>&nbsp;</div>
+                            <div class="col-lg-12">
+                                <div class="col-lg-2">
+                                    <button type="button" data-dismiss="modal"
+                                            class="btn btn-primary"
+                                            (click)="saveProduct(newProduct)">
+                                        Submit
+
+                                    </button>
+                                </div>
+                                <div class="col-lg-2">
+                                    <button type="button" data-dismiss="modal"
+                                            class="btn btn-warning">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                            <p>
+
+
+                            </p>
+                        </form>
+                    </div>
+                    <div>&nbsp;</div>
+                    <div>&nbsp;</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Modal -->
+            <div class="modal fade" id="myModalEdit" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Edit Forms</h4>
+                        </div>
+                     
+                        <div class="modal-body">
+                            <form *ngIf="editProductForm">
+                                <h2>Edit Product Details</h2>
+                                <p>
+                                    ID: <input type="text"
+                                               name="id"
+                                               [(ngModel)]="editedProduct.id" />
+                                </p>
+                                <p>
+                                    Name: <input type="text"
+                                                 name="name"
+                                                 [(ngModel)]="editedProduct.name" />
+                                </p>
+                                <p>
+                                    Description: <input type="text"
+                                                        name="description"
+                                                        [(ngModel)]="editedProduct.description" />
+                                </p>
+                                <p>
+                                    Price: <input type="text"
+                                                  name="price"
+                                                  [(ngModel)]="editedProduct.price" />
+                                </p>
+                                <p>
+                                    <button type="button"
+                                            class="btn btn-primary"
+                                            (click)="updateProduct(editedProduct)">
+                                        Submit
+                                    </button>
+                                    <button type="button" data-dismiss="modal"
+                                            class="btn btn-warning">
+                                        Cancel
+                                    </button>
+                                    <!--(click)="cancelEdits()"-->
+                                </p>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="container">
+            <!-- Modal -->
+            <div class="modal fade" id="myModalDetails" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4><b> Details</b> </h4>
+                        </div>
+                        <div class="modal-body">
+                            <form *ngIf="editProductForm">
+                                <h4><b>Product Details</b> </h4>
+                                <table class="table-bordered table-condensed table-responsive">
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Product Name</th>
+                                        <th>Quantity</th>
+                                        <th>Unit Price</th>
+                                        <th>Tax Amount</th>
+                                        <th>Total</th>
+                                    </tr>
+                                    <tr>
+                                        <td>{{editedProduct.id}}</td>
+                                        <td>{{editedProduct.name}}</td>
+                                        <td>{{editedProduct.quantity}}</td>
+                                        <td>{{editedProduct.price}}</td>
+                                        <td>{{((editedProduct.price * editedProduct.quantity)*6)/100}}</td>
+                                        <td>{{(editedProduct.price * editedProduct.quantity) + ((editedProduct.price * editedProduct.quantity)*6)/100}}</td>
+                                    </tr>
+
+                                </table>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+</div>
